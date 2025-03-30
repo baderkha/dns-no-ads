@@ -55,8 +55,9 @@ go run .\cmd\client\main.go
 
 -   [x] Local DNS blocking
 -   [x] Gio UI for query logs and stats
--   [x] Windows system tray support
--   [ ] Cross-platform GUI builds (Linux, macOS)
+-   [x] Windows support
+-   [x] Linux Support
+-   [ ] Darwin Support
 -   [ ] Auto-updating blocklists
 -   [ ] Per-app/domain filtering controls
 
