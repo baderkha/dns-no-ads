@@ -11,14 +11,7 @@ import (
 )
 
 var adDomains = map[string]struct{}{
-	"ads.google.com.":       {},
-	"ad.doubleclick.net.":   {},
-	"tracking.example.com.": {},
-	"youvisit.com.":         {},
-	"dev.youvisit.com.":     {},
-	"slack.com.":            {},
-	"eab.slack.com.":        {},
-	"shrter.link.":          {},
+	"ads.google.com.": {},
 	// Add more known ad domains here
 }
 
