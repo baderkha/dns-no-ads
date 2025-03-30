@@ -1,19 +1,5 @@
 package dns
 
-import (
-	"runtime"
-	"sync"
-)
-
-var Setter = sync.OnceValue(func() dnsSetter {
-	switch {
-	case runtime.GOOS == "windows":
-		return &WinDnsSet{}
-	}
-	return nil
-
-})
-
 type NetworkDevice struct {
 	DeviceIdentifier string
 	Description      string

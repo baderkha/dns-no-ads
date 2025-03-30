@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
+	"os/signal"
 	"strings"
 	"sync"
+	"syscall"
 
 	"github.com/miekg/dns"
 )
@@ -24,8 +27,23 @@ var server = sync.OnceValue(func() *dns.Server {
 // start the dns server
 func Start() {
 	// Start DNS server
+	err := PreStartSteps()
+	if err != nil {
+		log.Fatal(err)
+	}
+	sigChan := make(chan os.Signal)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
 
-	err := server().ListenAndServe()
+	go func() {
+		fmt.Println(" got interrupt signal: ", <-sigChan)
+		fmt.Println("running stop steps")
+		Stop()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		os.Exit(0)
+	}()
+	err = server().ListenAndServe()
 	if err != nil {
 		log.Fatalf("Failed to start DNS server: %v\n", err)
 	}
@@ -33,8 +51,8 @@ func Start() {
 }
 
 func Stop() error {
-	fmt.Println("server stopping")
-	return server().Shutdown()
+	server().Shutdown()
+	return PreStopSteps()
 }
 
 func handleRequest(w dns.ResponseWriter, r *dns.Msg) {

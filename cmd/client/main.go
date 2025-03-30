@@ -15,7 +15,6 @@ import (
 	"gioui.org/unit"
 	"gioui.org/widget"
 	"gioui.org/widget/material"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/julien040/go-ternary"
 )
 
@@ -38,18 +37,11 @@ func run(window *app.Window) error {
 	theme := material.NewTheme()
 	var ops op.Ops
 	actionButtonState := &widget.Clickable{}
-	dnsDeviceId, err := dns.Setter().GetDefaultDevice()
-	if err != nil {
-		fmt.Println("could not get default device", err)
-	}
-	spew.Dump(dnsDeviceId)
-	fallbackDns := []string{"8.8.8.8", "8.8.4.4"}
-	localDns := []string{"127.0.0.1"}
+
 	serverIsUp := false
 	for {
 		switch e := window.Event().(type) {
 		case app.DestroyEvent:
-			dns.Setter().SetDnsForDevice(dnsDeviceId, fallbackDns)
 			fmt.Println("destroying bye ...")
 			return e.Err
 		case app.FrameEvent:
@@ -60,15 +52,10 @@ func run(window *app.Window) error {
 			if isBtnClicked {
 				if serverIsUp {
 					go dns.Stop()
-					go func() {
-						dns.Setter().SetDnsForDevice(dnsDeviceId, fallbackDns)
-					}()
 					serverIsUp = false
 				} else {
 					go dns.Start()
-					go func() {
-						dns.Setter().SetDnsForDevice(dnsDeviceId, localDns)
-					}()
+
 					serverIsUp = true
 				}
 			}

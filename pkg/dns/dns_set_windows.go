@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"strings"
+	"sync"
 	"unsafe"
 
 	"golang.org/x/sys/windows"
@@ -14,6 +15,10 @@ var _ dnsSetter = &WinDnsSet{}
 
 type WinDnsSet struct {
 }
+
+var Setter = sync.OnceValue(func() dnsSetter {
+	return &WinDnsSet{}
+})
 
 // GetDefaultDevice implements DnsSetter.
 func (w *WinDnsSet) GetDefaultDevice() (*NetworkDevice, error) {
