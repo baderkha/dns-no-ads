@@ -91,6 +91,23 @@ func run(window *app.Window) error {
 								Left:   unit.Dp(35),
 							}
 							return margins.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+								status := material.H4(theme, fmt.Sprintf("Ad Hosts Blocked :[%d]", dns.AdsBlocked))
+								status.Alignment = text.Middle
+								// Define an large label with an appropriate text:
+								return status.Layout(gtx)
+							})
+
+						},
+					),
+					layout.Rigid(
+						func(gtx layout.Context) layout.Dimensions {
+							margins := layout.Inset{
+								Top:    unit.Dp(25),
+								Bottom: unit.Dp(25),
+								Right:  unit.Dp(35),
+								Left:   unit.Dp(35),
+							}
+							return margins.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 								btn := material.Button(theme, actionButtonState, ternary.If(serverIsUp, "Stop", "Start"))
 
 								btn.Color = color.NRGBA{R: 255, G: 255, B: 255, A: 255}

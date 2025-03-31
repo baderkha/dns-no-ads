@@ -45,7 +45,7 @@ go run .\cmd\client\main.go
 
 ##  Screen shot
 
-<img src="timelapse/2025-30-03/Capture.PNG" alt="Screenshot">
+<img src="timelapse/current.png" alt="Screenshot">
 
 
 

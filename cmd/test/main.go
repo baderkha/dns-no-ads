@@ -1,25 +1,19 @@
 package main
 
 import (
+	"baderkha-no-dns/pkg/dns/blocklist"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"path/filepath"
-	"strings"
 	"time"
 )
 
 func main() {
-	t := time.Now()
-	kv := make(map[string]struct{})
-	dat, err := ioutil.ReadFile(filepath.Join("resources", "dns", "blocklist", "block-list.txt"))
+	slc, err := blocklist.LoadStorage()
 	if err != nil {
 		log.Fatal(err)
 	}
-	all := strings.Split(string(dat), "\n")
-	_ = all
-	for _, v := range all {
-		kv[v] = struct{}{}
-	}
-	fmt.Println(time.Since(t), len(all), len(kv))
+	q := "www.appnerve.com"
+	t := time.Now()
+	ok := blocklist.Checker().Has(q)
+	fmt.Println(time.Since(t), len(slc), ok)
 }
