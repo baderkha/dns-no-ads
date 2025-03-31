@@ -79,4 +79,4 @@ MIT License. See [LICENSE](./LICENSE) for details.
 
 -   [gioui.org](https://gioui.org/) – for the GUI framework
 -   [Go DNS libraries](https://pkg.go.dev/github.com/miekg/dns)
--   Open source blocklist maintainers ❤️
+-   [Hagezi](https://github.com/hagezi/dns-blocklists) - Open source blocklist maintainers ❤️

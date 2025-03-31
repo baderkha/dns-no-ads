@@ -74,6 +74,7 @@ func main() {
 	expectedFileOut := filepath.Join("resources", "dns", "blocklist", "block-list.txt")
 	os.Remove(expectedFileOut)
 	dbPath := filepath.Join("resources", "db", "block-list.db")
+
 	err := DownloadAndFilterDomains("https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/hosts/multi.txt", filepath.Join("resources", "dns", "blocklist"), "block-list.txt")
 	if err != nil {
 		log.Fatal(err)
