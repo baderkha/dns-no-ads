@@ -61,7 +61,7 @@ func handleRequest(w dns.ResponseWriter, r *dns.Msg) {
 	m.Compress = false
 
 	for _, question := range r.Question {
-
+		tn := time.Now()
 		if blocklist.Checker().Has(question.Name) {
 			atomic.AddInt64(&AdsBlocked, 1)
 			fmt.Println("This dns is blocked[", question.Name, "]")
@@ -85,7 +85,7 @@ func handleRequest(w dns.ResponseWriter, r *dns.Msg) {
 				continue
 			}
 
-			fmt.Println("Forwarding DNS[", question.Name, "]", "is [", response[0].String(), "]")
+			fmt.Println("Forwarding DNS[", question.Name, "]", "is [", response[0].String(), "]", time.Since(tn))
 
 			m.Answer = append(m.Answer, response...)
 		}
